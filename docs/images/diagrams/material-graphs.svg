@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 600" width="1400" height="600" role="img" aria-labelledby="ttl dsc">
+  <title id="ttl">Material wiring for the SH ambient and LUT post-process materials</title>
+  <desc id="dsc">Two post-process material graphs. The SH ambient graph reads the world normal and seven SH coefficients from MPC_RestoreControl into MF_SH_Irradiance, multiplies by albedo and one minus metallic, adds SceneColor and scales by Enable_SH_Ambient. The LUT graph saturates SceneColor, does a two-fetch manual trilinear strip lookup and lerps by Enable_LUT. Insertion points and MPC inputs are labelled.</desc>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#57606A"/>
+    </marker>
+  </defs>
+  <style>
+    .bg { fill: #F7F8FA; }
+    .tt { font-family: Inter, Segoe UI, Arial, sans-serif; fill: #161B22; }
+    .h1 { font-size: 24px; font-weight: 700; }
+    .sub { font-size: 12px; fill: #57606A; }
+    .hd { font-size: 13px; font-weight: 700; }
+    .ins { font-size: 10.3px; font-weight: 600; }
+    .nt { font-size: 9.5px; fill: #57606A; }
+    .gm { font-family: Consolas, SFMono-Regular, Menlo, monospace; font-size: 9.4px; fill: #3D444D; }
+    .nm { font-size: 12px; font-weight: 700; }
+    .ex { font-family: Consolas, SFMono-Regular, Menlo, monospace; font-size: 9.6px; fill: #57606A; }
+    .notes { font-size: 10.6px; fill: #3D444D; }
+    .panel { fill: #FFFFFF; stroke: #DCE1E7; stroke-width: 1.3; }
+    .node { fill: #FFFFFF; stroke: #C9D1D9; stroke-width: 1.4; }
+    .nodeSH { fill: #FFFFFF; stroke: #1F6FEB; stroke-width: 1.6; }
+    .nodeLUT { fill: #FFFFFF; stroke: #1A7F37; stroke-width: 1.6; }
+    .barSH { fill: #1F6FEB; }
+    .barLUT { fill: #1A7F37; }
+    .flow { stroke: #57606A; stroke-width: 1.6; fill: none; }
+    .mpc { fill: #EAF2FF; stroke: #7FA9F0; stroke-width: 1; }
+    .rule { stroke: #E3E7EC; stroke-width: 1.1; }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="1400" height="600"/>
+
+  <text class="tt h1" x="40" y="40">Material wiring — SH ambient and LUT post-process</text>
+  <text class="tt sub" x="40" y="62">Both are post-process materials in _Restore/. Every switch is an MPC scalar, so each term can be toggled in the level without editing the graph.</text>
+
+  <!-- ================= left panel: SH ================= -->
+  <rect class="panel" x="40" y="88" width="640" height="468" rx="8"/>
+  <text class="tt hd" x="56" y="114">SH ambient — M_PP_SH_Ambient</text>
+  <text class="tt ins" x="56" y="133" fill="#1257C4">Blendable Location: Before Bloom</text>
+
+  <!-- gutter -->
+  <g class="tt gm">
+    <text x="64" y="170">GBuffer NormalWS</text>
+    <text x="64" y="186">MPC L0 · SH0..SH6</text>
+    <text x="64" y="238">V3 in · float3 out</text>
+    <text x="64" y="306">PPI_DiffuseColor</text>
+    <text x="64" y="322">base colour</text>
+    <text x="64" y="374">PPI_Metallic</text>
+    <text x="64" y="390">single channel</text>
+    <text x="64" y="442">PostProcessInput0</text>
+    <text x="64" y="458">incoming SceneColor</text>
+    <text x="64" y="510">MPC scalar</text>
+    <text x="64" y="526">0 = bypass</text>
+  </g>
+  <rect x="56" y="176" width="3" height="12" fill="#1F6FEB"/>
+  <rect x="56" y="500" width="3" height="12" fill="#1F6FEB"/>
+  <text class="tt nt" x="56" y="152" font-weight="600" fill="#1257C4">INPUT</text>
+  <text class="tt nt" x="56" y="482" font-weight="600" fill="#1257C4">SWITCH</text>
+
+  <!-- notes column -->
+  <g class="tt nt">
+    <text x="532" y="166">mask alpha off (V3)</text>
+    <text x="532" y="182">world normal, not tangent</text>
+    <text x="532" y="234">L1 + L2 basis,</text>
+    <text x="532" y="250">max(irradiance, 0)</text>
+    <text x="532" y="302">albedo from the GBuffer</text>
+    <text x="532" y="318">sky pixels excluded</text>
+    <text x="532" y="370">metals get no diffuse</text>
+    <text x="532" y="386">ambient</text>
+    <text x="532" y="438">adds in HDR, so the term</text>
+    <text x="532" y="454">shares the scene tonemap</text>
+    <text x="532" y="506">saturate(scalar) × term</text>
+    <text x="532" y="522">keeps the graph comparable</text>
+  </g>
+
+  <!-- chain -->
+  <g>
+    <rect class="nodeSH" x="200" y="150" width="320" height="54" rx="5"/>
+    <rect class="barSH" x="200" y="150" width="4" height="54" rx="2"/>
+    <text class="tt nm" x="214" y="172">Inputs</text>
+    <text class="tt ex" x="214" y="190">NormalWS · L0 · SH0..SH6 · Intensity</text>
+
+    <rect class="node" x="200" y="218" width="320" height="54" rx="5"/>
+    <rect class="barSH" x="200" y="218" width="4" height="54" rx="2"/>
+    <text class="tt nm" x="214" y="240">MF_SH_Irradiance</text>
+    <text class="tt ex" x="214" y="258">SH basis -&gt; float3 irradiance</text>
+
+    <rect class="node" x="200" y="286" width="320" height="54" rx="5"/>
+    <rect class="barSH" x="200" y="286" width="4" height="54" rx="2"/>
+    <text class="tt nm" x="214" y="308">× BaseColor</text>
+    <text class="tt ex" x="214" y="326">Ambient = irradiance × albedo</text>
+
+    <rect class="node" x="200" y="354" width="320" height="54" rx="5"/>
+    <rect class="barSH" x="200" y="354" width="4" height="54" rx="2"/>
+    <text class="tt nm" x="214" y="376">× (1 - Metallic)</text>
+    <text class="tt ex" x="214" y="394">diffuse-only weighting</text>
+
+    <rect class="node" x="200" y="422" width="320" height="54" rx="5"/>
+    <rect class="barSH" x="200" y="422" width="4" height="54" rx="2"/>
+    <text class="tt nm" x="214" y="444">+ SceneColor</text>
+    <text class="tt ex" x="214" y="462">Out = SceneColor + Ambient</text>
+
+    <rect class="nodeSH" x="200" y="490" width="320" height="54" rx="5"/>
+    <rect class="barSH" x="200" y="490" width="4" height="54" rx="2"/>
+    <text class="tt nm" x="214" y="512">× Enable_SH_Ambient</text>
+    <text class="tt ex" x="214" y="530">final PP output</text>
+  </g>
+
+  <path class="flow" d="M360,204 V214" marker-end="url(#ar)"/>
+  <path class="flow" d="M360,272 V282" marker-end="url(#ar)"/>
+  <path class="flow" d="M360,340 V350" marker-end="url(#ar)"/>
+  <path class="flow" d="M360,408 V418" marker-end="url(#ar)"/>
+  <path class="flow" d="M360,476 V486" marker-end="url(#ar)"/>
+
+  <!-- ================= right panel: LUT ================= -->
+  <rect class="panel" x="720" y="88" width="640" height="468" rx="8"/>
+  <text class="tt hd" x="736" y="114">LUT — M_PP_LUT</text>
+  <text class="tt ins" x="736" y="133" fill="#146B33">Blendable Location: After Tonemapping</text>
+
+  <g class="tt gm">
+    <text x="760" y="170">SceneColor</text>
+    <text x="760" y="186">display-referred</text>
+    <text x="760" y="252">clamp to 0..1</text>
+    <text x="760" y="334">T_LUT_MC_SuiBo</text>
+    <text x="760" y="350">1024 × 32, 8-bit</text>
+    <text x="760" y="416">MPC Enable_LUT</text>
+    <text x="760" y="432">0 = bypass</text>
+    <text x="760" y="498">backbuffer</text>
+  </g>
+  <rect x="752" y="406" width="3" height="12" fill="#1A7F37"/>
+  <text class="tt nt" x="752" y="152" font-weight="600" fill="#146B33">INPUT</text>
+  <text class="tt nt" x="752" y="388" font-weight="600" fill="#146B33">SWITCH</text>
+
+  <g class="tt nt">
+    <text x="1212" y="170">the space the bake</text>
+    <text x="1212" y="186">indexes</text>
+    <text x="1212" y="242">HDR outliers clamp</text>
+    <text x="1212" y="258">instead of wrapping</text>
+    <text x="1212" y="326">u0 / u1 from s0 / s1,</text>
+    <text x="1212" y="342">v from G, t from B</text>
+    <text x="1212" y="358">2 fetches, LOD 0</text>
+    <text x="1212" y="414">same switch pattern</text>
+    <text x="1212" y="430">as the SH module</text>
+    <text x="1212" y="498">no second tonemap</text>
+  </g>
+
+  <g>
+    <rect class="nodeLUT" x="880" y="150" width="320" height="54" rx="5"/>
+    <rect class="barLUT" x="880" y="150" width="4" height="54" rx="2"/>
+    <text class="tt nm" x="894" y="172">SceneColor</text>
+    <text class="tt ex" x="894" y="190">HDR from the post-process chain</text>
+
+    <rect class="node" x="880" y="232" width="320" height="54" rx="5"/>
+    <rect class="barLUT" x="880" y="232" width="4" height="54" rx="2"/>
+    <text class="tt nm" x="894" y="254">saturate(SceneColor)</text>
+    <text class="tt ex" x="894" y="272">LUT domain is 0..1</text>
+
+    <rect class="node" x="880" y="314" width="320" height="54" rx="5"/>
+    <rect class="barLUT" x="880" y="314" width="4" height="54" rx="2"/>
+    <text class="tt nm" x="894" y="336">Strip lookup</text>
+    <text class="tt ex" x="894" y="354">2 fetches + lerp t (u0, u1, v)</text>
+
+    <rect class="node" x="880" y="396" width="320" height="54" rx="5"/>
+    <rect class="barLUT" x="880" y="396" width="4" height="54" rx="2"/>
+    <text class="tt nm" x="894" y="418" font-size="11">lerp(SceneColor, graded, Enable_LUT)</text>
+    <text class="tt ex" x="894" y="436">bypass when 0</text>
+
+    <rect class="nodeLUT" x="880" y="478" width="320" height="54" rx="5"/>
+    <rect class="barLUT" x="880" y="478" width="4" height="54" rx="2"/>
+    <text class="tt nm" x="894" y="500">Output</text>
+    <text class="tt ex" x="894" y="518">display-referred, after tonemap</text>
+  </g>
+
+  <path class="flow" d="M1040,204 V228" marker-end="url(#ar)"/>
+  <path class="flow" d="M1040,286 V310" marker-end="url(#ar)"/>
+  <path class="flow" d="M1040,368 V392" marker-end="url(#ar)"/>
+  <path class="flow" d="M1040,450 V474" marker-end="url(#ar)"/>
+
+  <line class="rule" x1="40" y1="572" x2="1360" y2="572"/>
+
+  <!-- footer -->
+  <text class="tt notes" x="40" y="590">AO is applied after the SH term on purpose: folding occlusion into the SH ambient would count it twice. Order is SH → AO → tonemap → LUT.</text>
+</svg>

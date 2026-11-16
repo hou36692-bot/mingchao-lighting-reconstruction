@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 700" width="1400" height="700" role="img" aria-labelledby="ttl dsc">
+  <title id="ttl">AO sampling: 8 directions by 4 steps in the pixel hemisphere</title>
+  <desc id="dsc">Top view of the sample disc around one pixel: eight directions, four step radii, a per-pixel interleaved gradient noise rotation, and 32 taps per pixel within a 150 cm radius. Side panels give the per-sample occlusion test, the skip conditions, and the difference between this single-pass material and the source's three-level plus temporal AO.</desc>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,1 L9,5 L0,9 Z" fill="#1F6FEB"/>
+    </marker>
+  </defs>
+  <style>
+    .bg { fill: #F7F8FA; }
+    .tt { font-family: Inter, Segoe UI, Arial, sans-serif; fill: #161B22; }
+    .h1 { font-size: 24px; font-weight: 700; }
+    .sub { font-size: 12px; fill: #57606A; }
+    .st { font-size: 12.5px; font-weight: 700; }
+    .ss { font-size: 10.3px; fill: #57606A; }
+    .b { font-size: 11px; fill: #24292F; }
+    .mono { font-family: Consolas, SFMono-Regular, Menlo, monospace; font-size: 10px; fill: #24292F; }
+    .monos { font-family: Consolas, SFMono-Regular, Menlo, monospace; font-size: 9.4px; fill: #57606A; }
+    .halo { paint-order: stroke; stroke: #FFFFFF; stroke-width: 3px; stroke-linejoin: round; }
+    .panel { fill: #FFFFFF; stroke: #DCE1E7; stroke-width: 1.3; }
+    .ring { fill: none; stroke: #C9D1D9; stroke-width: 1.1; }
+    .ringOut { fill: none; stroke: #9AA4AE; stroke-width: 1.8; }
+    .spoke { stroke: #D4DAE1; stroke-width: 1.1; }
+    .dot { fill: #1F6FEB; }
+    .dotFar { fill: #BC4C00; }
+    .rule { stroke: #E3E7EC; stroke-width: 1.1; }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="1400" height="700"/>
+
+  <text class="tt h1" x="40" y="40">AO sampling — 8 directions × 4 steps around one pixel</text>
+  <text class="tt sub" x="40" y="62">Custom material, single pass, 32 taps per pixel. Rotation is per pixel, so neighbouring pixels do not share a pattern.</text>
+
+  <!-- ================= left: hemisphere ================= -->
+  <rect class="panel" x="40" y="88" width="820" height="564" rx="8"/>
+
+  <text class="tt st" x="60" y="116">Sample disc — tangent plane at P</text>
+  <text class="tt monos" x="840" y="116" text-anchor="end">DIRS = 8 · STEPS = 4 · Radius = 150 cm</text>
+  <text class="tt ss" x="60" y="134">N is the GBuffer normal in view space; the disc lies in its tangent plane.</text>
+
+  <!-- rings -->
+  <circle class="ringOut" cx="430" cy="356" r="210"/>
+  <circle class="ring" cx="430" cy="356" r="105"/>
+  <circle class="ring" cx="430" cy="356" r="70"/>
+  <circle class="ring" cx="430" cy="356" r="35"/>
+
+  <!-- spokes -->
+  <g class="spoke">
+    <line x1="430" y1="356" x2="640" y2="356"/>
+    <line x1="430" y1="356" x2="578.5" y2="207.5"/>
+    <line x1="430" y1="356" x2="430" y2="146"/>
+    <line x1="430" y1="356" x2="281.5" y2="207.5"/>
+    <line x1="430" y1="356" x2="220" y2="356"/>
+    <line x1="430" y1="356" x2="281.5" y2="504.5"/>
+    <line x1="430" y1="356" x2="430" y2="566"/>
+    <line x1="430" y1="356" x2="578.5" y2="504.5"/>
+  </g>
+
+  <!-- dots: 4 radii x 8 directions; drawn explicitly so radii read at 100% -->
+  <g>
+    <!-- r = 35 -->
+    <circle class="dot" cx="465" cy="356" r="3.3"/><circle class="dot" cx="454.7" cy="331.3" r="3.3"/>
+    <circle class="dot" cx="430" cy="321" r="3.3"/><circle class="dot" cx="405.3" cy="331.3" r="3.3"/>
+    <circle class="dot" cx="395" cy="356" r="3.3"/><circle class="dot" cx="405.3" cy="380.7" r="3.3"/>
+    <circle class="dot" cx="430" cy="391" r="3.3"/><circle class="dot" cx="454.7" cy="380.7" r="3.3"/>
+    <!-- r = 70 -->
+    <circle class="dot" cx="500" cy="356" r="3.3"/><circle class="dot" cx="479.5" cy="306.5" r="3.3"/>
+    <circle class="dot" cx="430" cy="286" r="3.3"/><circle class="dot" cx="380.5" cy="306.5" r="3.3"/>
+    <circle class="dot" cx="360" cy="356" r="3.3"/><circle class="dot" cx="380.5" cy="405.5" r="3.3"/>
+    <circle class="dot" cx="430" cy="426" r="3.3"/><circle class="dot" cx="479.5" cy="405.5" r="3.3"/>
+    <!-- r = 105 -->
+    <circle class="dot" cx="535" cy="356" r="3.3"/><circle class="dot" cx="504.2" cy="281.8" r="3.3"/>
+    <circle class="dot" cx="430" cy="251" r="3.3"/><circle class="dot" cx="355.8" cy="281.8" r="3.3"/>
+    <circle class="dot" cx="325" cy="356" r="3.3"/><circle class="dot" cx="355.8" cy="430.2" r="3.3"/>
+    <circle class="dot" cx="430" cy="461" r="3.3"/><circle class="dot" cx="504.2" cy="430.2" r="3.3"/>
+    <!-- r = 210 -->
+    <circle class="dotFar" cx="640" cy="356" r="3.8"/><circle class="dotFar" cx="578.5" cy="207.5" r="3.8"/>
+    <circle class="dotFar" cx="430" cy="146" r="3.8"/><circle class="dotFar" cx="281.5" cy="207.5" r="3.8"/>
+    <circle class="dotFar" cx="220" cy="356" r="3.8"/><circle class="dotFar" cx="281.5" cy="504.5" r="3.8"/>
+    <circle class="dotFar" cx="430" cy="566" r="3.8"/><circle class="dotFar" cx="578.5" cy="504.5" r="3.8"/>
+  </g>
+
+  <!-- step labels on the up spoke -->
+  <g class="tt mono halo">
+    <text x="442" y="316">s0  1/36</text>
+    <text x="442" y="281">s1  1/18</text>
+    <text x="442" y="246">s2  1/12</text>
+    <text x="442" y="141">s3  1/6</text>
+  </g>
+
+  <!-- centre glyph -->
+  <circle cx="430" cy="356" r="8.5" fill="#FFFFFF" stroke="#161B22" stroke-width="1.6"/>
+  <circle cx="430" cy="356" r="2.6" fill="#161B22"/>
+  <text class="tt ss halo" x="430" y="392" text-anchor="middle">P · N out of page</text>
+
+  <!-- rotation arc -->
+  <path d="M389.7,127.5 A232,232 0 0 1 516.9,140.9" fill="none" stroke="#1F6FEB" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text class="tt b halo" x="534" y="126">θ = 2π · IGN(pixel)</text>
+  <text class="tt monos" x="534" y="162">per-pixel rotation of all 8 directions</text>
+
+  <!-- sample callout -->
+  <circle cx="535" cy="356" r="9" fill="none" stroke="#BC4C00" stroke-width="1.4" stroke-dasharray="3 2"/>
+  <line x1="543" y1="348" x2="566" y2="326" stroke="#8C959F" stroke-width="1"/>
+  <rect x="560" y="272" width="284" height="58" rx="4" fill="#FFFFFF" stroke="#E3E7EC"/>
+  <text class="tt mono" x="570" y="292">S = P + dist · dir</text>
+  <text class="tt mono" x="570" y="307">uv = project(S) -> read sceneZ</text>
+  <text class="tt mono" x="570" y="322">occluded if S.z - sceneZ &gt; bias</text>
+
+  <!-- legend -->
+  <line class="rule" x1="60" y1="580" x2="840" y2="580"/>
+  <circle class="dot" cx="70" cy="598" r="4"/>
+  <text class="tt b" x="82" y="602">sample point</text>
+  <circle class="dotFar" cx="210" cy="598" r="4"/>
+  <text class="tt b" x="222" y="602">s3, the far ring at 1.0 R</text>
+  <text class="tt monos" x="60" y="622">step ladder s0 1/36 · s1 1/18 · s2 1/12 · s3 1/6   ->   ×6   ->   0.17 / 0.33 / 0.50 / 1.00 R</text>
+  <text class="tt monos" x="60" y="640">θ = 2π · IGN(x,y),  IGN = frac(52.9829189 · frac(0.06711056x + 0.00583715y))</text>
+
+  <!-- ================= right panel A: per-sample test ================= -->
+  <rect class="panel" x="880" y="88" width="480" height="252" rx="8"/>
+  <text class="tt st" x="896" y="114">Per-sample occlusion test</text>
+
+  <g>
+    <circle cx="904" cy="140" r="9" fill="#EAF2FF" stroke="#7FA9F0" stroke-width="1"/>
+    <text class="tt monos" x="904" y="144" text-anchor="middle" fill="#1257C4">1</text>
+    <text class="tt b" x="922" y="144">S = P + dist · dir, in view space</text>
+
+    <circle cx="904" cy="170" r="9" fill="#EAF2FF" stroke="#7FA9F0" stroke-width="1"/>
+    <text class="tt monos" x="904" y="174" text-anchor="middle" fill="#1257C4">2</text>
+    <text class="tt b" x="922" y="174">project S to its pixel, read sceneZ</text>
+
+    <circle cx="904" cy="200" r="9" fill="#EAF2FF" stroke="#7FA9F0" stroke-width="1"/>
+    <text class="tt monos" x="904" y="204" text-anchor="middle" fill="#1257C4">3</text>
+    <text class="tt b" x="922" y="204">occluded when S.z - sceneZ &gt; bias</text>
+
+    <circle cx="904" cy="230" r="9" fill="#EAF2FF" stroke="#7FA9F0" stroke-width="1"/>
+    <text class="tt monos" x="904" y="234" text-anchor="middle" fill="#1257C4">4</text>
+    <text class="tt b" x="922" y="234">weight = range · min(1, diff / 0.25R)</text>
+  </g>
+
+  <line class="rule" x1="896" y1="254" x2="1344" y2="254"/>
+  <text class="tt monos" x="896" y="274">bias = pixelFootprint · 1.5 / max(0.5, |N·V|)</text>
+  <text class="tt monos" x="896" y="292">range = max(0, 1 - |P.z - sceneZ| / 2R)</text>
+  <text class="tt monos" x="896" y="310">ao = pow(max(0, 1 - sum(weight) / count), Intensity)</text>
+  <text class="tt ss" x="896" y="328">bias scales with the pixel footprint, so a flat floor does not occlude itself.</text>
+
+  <!-- ================= right panel B: skip table ================= -->
+  <rect class="panel" x="880" y="356" width="480" height="296" rx="8"/>
+  <text class="tt st" x="896" y="382">Skip conditions — AO stays 1.0</text>
+
+  <text class="tt monos" x="896" y="406" fill="#57606A">condition</text>
+  <text class="tt monos" x="1230" y="406" fill="#57606A">result</text>
+  <line class="rule" x1="896" y1="414" x2="1344" y2="414"/>
+
+  <g class="tt b">
+    <text x="896" y="436">depth &lt;= 0</text>
+    <text x="1230" y="436" fill="#57606A">no geometry</text>
+
+    <text x="896" y="462">depth &gt; 700000 (7 km)</text>
+    <text x="1230" y="462" fill="#57606A">far cut-off</text>
+
+    <text x="896" y="488">ShadingModelID &lt; 0.5</text>
+    <text x="1230" y="488" fill="#57606A">unlit / sky, no normal</text>
+
+    <text x="896" y="514">sm == 10 (water), 12..15</text>
+    <text x="1230" y="514" fill="#57606A">forced in source</text>
+
+    <text x="896" y="540">sample behind camera</text>
+    <text x="1230" y="540" fill="#57606A">tap dropped</text>
+  </g>
+
+  <line class="rule" x1="896" y1="560" x2="1344" y2="560"/>
+
+  <text class="tt st" x="896" y="584" font-size="11.5">This material vs source ps1559 / ps1561 / ps1563</text>
+  <g class="tt monos">
+    <text x="896" y="606" fill="#161B22">this material  1 full-res pass, 32 taps, no history</text>
+    <text x="896" y="624" fill="#161B22">source         3 levels 540p -> 1080p -> 2160p</text>
+    <text x="896" y="642" fill="#161B22">source         temporal blend 0.2 (80% history kept)</text>
+  </g>
+</svg>

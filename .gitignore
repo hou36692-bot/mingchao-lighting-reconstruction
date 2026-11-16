@@ -1,0 +1,50 @@
+# ---- UE 工程产物 ----
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+Build/
+.vs/
+*.sln
+*.slnx
+
+# ---- 源数据与逆向产物（不入库） ----
+data/
+shots/
+analysis/
+UE还原记录/
+tools/tmp/
+*.rdc
+*.uasset
+*.umap
+*.pak
+*.ucas
+*.utoc
+*.bin
+
+# ---- 缓存与临时文件 ----
+node_modules/
+__pycache__/
+*.pyc
+*.log
+out/
+
+# ---- 系统文件 ----
+.DS_Store
+Thumbs.db
+
+# ---- 密钥与环境配置 ----
+.env
+.env.*
+tools.env
+*.pem
+*.key
+*.pfx
+*.p12
+.netrc
+.npmrc
+.pypirc
+
+# ---- 允许入库的图片 ----
+!docs/images/**/*.png
+!*.svg
