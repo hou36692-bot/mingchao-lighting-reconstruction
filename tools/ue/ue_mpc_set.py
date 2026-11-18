@@ -1,6 +1,6 @@
 """Set scalar parameters on MPC_RestoreControl by name.
 
-args: name=value pairs, e.g. Enable_SH_Ambient=1 SH_Intensity=0.5
+args: name=value pairs, e.g. Enable_Custom_AO=1 AO_Radius=150
 """
 import unreal
 

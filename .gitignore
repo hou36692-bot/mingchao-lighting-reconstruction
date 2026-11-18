@@ -8,11 +8,11 @@ Build/
 *.sln
 *.slnx
 
-# ---- 源数据与逆向产物（不入库） ----
-data/
-shots/
-analysis/
-UE还原记录/
+# ---- 源数据与逆向产物（不入库；只匹配仓库根目录，避免误伤 tools/analysis/） ----
+/data/
+/shots/
+/analysis/
+/UE还原记录/
 tools/tmp/
 *.rdc
 *.uasset

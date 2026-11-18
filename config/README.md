@@ -14,30 +14,23 @@
 
 - `ue-rendering-settings.ini` **不是**完整的 `DefaultEngine.ini`。项目标识、平台配置、插件列表、分辨率设置，以及安全令牌、项目 ID、移动端文件服务等字段均已排除。
 - 仓库不包含 UE 工程、`.uproject`、`.uasset`、`.umap`、`Content/`、`Intermediate/`、`Saved/` 或 `Binaries/`。
-- 仓库也不包含逆向源数据（RDC、抓帧导出、LUT 条带、灯数据、TOD 曲线、植被网格等）。因此这些配置只能作为**参考**，无法单独复现画面。
+- 仓库也不包含逆向源数据（RDC、抓帧导出、灯数据、植被网格等）。因此这些配置只能作为参考，无法单独复现画面。
 - `.ini` 中的值与最终视口效果相关；不同引擎小版本或工程资产可能需要对参数做微调。
 
 ## 配套 UE 资产路径
 
-配置文件与文档中出现的资产路径，均对应一个**未随仓库分发**的参考工程。其布局如下（仅作阅读代码时的对照）：
+配置文件与文档中出现的资产路径，均对应一个未随仓库分发的参考工程。其布局如下（仅作阅读代码时的对照）：
 
 ```
 /Game/Reconstruction/Rendering/
-├── Common/
-│   ├── MPC_RestoreControl
-│   ├── BP_EnvironmentTOD
-│   └── MPC_TODEnvironment
 ├── _Restore/
-│   ├── Common/      MPC_RestoreControl、公共 Material Function
-│   ├── SH/          MF_SH_Irradiance、M_PP_SH_Ambient、M_Dbg_SH_Sphere
+│   ├── Common/      MPC_RestoreControl、M_PP_RestoreDebugViz
 │   ├── AO/          M_PP_CustomAO、M_Dbg_AO_Test
-│   ├── LUT/         T_LUT_MC_SuiBo、M_PP_LUT、M_Dbg_LUT_Test
 │   ├── Water/       M_Water_Restore_SLW、MI_Water_Restore_SLW
-│   ├── CSM/         调试材质
-│   └── TOD/         CT_Restore_TOD 等曲线资产
+│   └── Veg/         SM_WWGrass_TriCard_A/B、M_WWGrass、MI_WWGrass
 ├── Water/           原始水体材质（泡沫/焦散/涟漪/法线）
-├── Sky/             天空与云材质
-└── Reflection/      天空反射 Cube
+├── Grass/           原始地表草材质与蓝图
+└── Sky/             天空与云材质
 ```
 
 关卡：`/Game/Maps/L_SuiBo_LightingReverse`（由原场景复制而来，所有还原改动只在此关卡和 `_Restore/` 内进行）。

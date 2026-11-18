@@ -89,4 +89,4 @@ GPU 测试使用的是解析平面场景（深度/法线由射线求交给出）
 - 图示：`./images/diagrams/ao-sampling.svg`（8 方向 × 4 步半球采样）
 - HLSL：`../hlsl/pp_custom_ao.hlsl`（`M_PP_CustomAO` 的 Custom 节点）
 - CPU 参考 / 单测：`../tools/analysis/ao_ref.mjs`、`../tools/analysis/ao_test.mjs`
-- 相关模块：`./sh-skylight.md`（同为 Before Bloom 的后处理项）、`./water.md`（水面 AO 跳过策略）
+- 相关模块：`./water.md`（水面 AO 跳过策略）、`./architecture.md`（后处理插入点）

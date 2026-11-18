@@ -2,7 +2,7 @@
 
 Blendable Location = Before Bloom (SceneColor is still linear HDR, and the AO
 multiply belongs in the lighting, ahead of bloom/tonemap). Reads its controls
-from MPC_RestoreControl, same pattern as the SH and LUT modules.
+from MPC_RestoreControl, like the other restore modules.
 
 The Custom node body is read from hlsl/pp_custom_ao.hlsl (repository root);
 set MC_REPO_ROOT if __file__ is unavailable.

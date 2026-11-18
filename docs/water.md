@@ -77,4 +77,4 @@ T            = exp(-σt · d)                    // 透射率，d 为水深处
 
 - 图示：[关 / 开 / 源帧同机位](./images/water-compare.png)
 - 材质复制 / 参数 / 开关：[ue_water_restore.py](../tools/ue/ue_water_restore.py)
-- 相关模块：[时间与天气对齐](./tod.md)（水色随天空）、[聚簇光照](./clustered-lighting.md)（局部灯对水面高光的影响）
+- 相关模块：[聚簇光照](./clustered-lighting.md)（局部灯对水面高光的影响）、[范围边界](./boundaries.md)（水色随天空）

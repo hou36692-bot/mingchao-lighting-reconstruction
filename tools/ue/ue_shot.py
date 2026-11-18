@@ -100,7 +100,7 @@ def run(*argv):
             break
 
     # Optional 11th arg: show flag overrides, e.g. "TemporalAA=0,AntiAliasing=0,LightingOnlyOverride=1".
-    # Debug props (the SH test sphere) never belong in comparison shots.
+    # Debug props (actors labelled __RESTORE_DBG*) never belong in comparison shots.
     for dbg in eas.get_all_level_actors():
         if dbg.get_actor_label().startswith("__RESTORE_DBG"):
             comp.hide_actor_components(dbg)
